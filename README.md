@@ -195,3 +195,102 @@ Aprendemos duas formas principais de criar objetos em JavaScript:
 Reforçamos a diferença entre **atributos** (dados) e **métodos** (funções do objeto), o uso da palavra-chave `this`, a convenção de usar letra maiúscula para funções construtoras, e a importância da palavra-chave `new` para instanciar objetos corretamente.
 
 Também vimos como testar nosso código com Node.js diretamente pelo terminal, o que facilita bastante o processo de desenvolvimento e depuração.
+
+## Aula 3 – Verifique os tipos e instâncias
+
+### Objetivos da aula
+
+Nesta aula, nos aprofundamos nas formas de identificar os tipos de dados em JavaScript, com os seguintes objetivos:
+
+* Entender a verificação de tipos de dados com `typeof`;
+* Aprender a verificar instâncias de objetos personalizados com `instanceof`;
+* Explorar as distinções entre tipos primitivos e instâncias de objetos no JavaScript.
+
+---
+
+### Verificação de tipos com `typeof`
+
+O professor iniciou a aula criando algumas variáveis simples para ilustrar os diferentes tipos de dados:
+
+```javascript
+const nome = "Gean";
+const idade = 30;
+const eMaiorDeIdade = true;
+const conhecimentos = ["HTML", "CSS", "JavaScript"];
+```
+
+Depois, criou um objeto com esses dados:
+
+```javascript
+const pessoa = {
+  nome: nome,
+  idade: idade,
+  eMaiorDeIdade: eMaiorDeIdade,
+  conhecimentos: conhecimentos
+};
+```
+
+Para verificar o tipo de dado armazenado em cada constante ou atributo, utilizamos a palavra-chave **`typeof`**, que retorna uma *string* indicando o tipo do valor.
+
+Exemplos de uso:
+
+```javascript
+console.log(typeof nome);             // "string"
+console.log(typeof idade);           // "number"
+console.log(typeof eMaiorDeIdade);   // "boolean"
+console.log(typeof conhecimentos);   // "object"
+console.log(typeof pessoa);          // "object"
+```
+
+> 🧠 Importante: Mesmo que `conhecimentos` seja um array, e `pessoa` seja um objeto composto, o `typeof` retorna `"object"` para ambos. Isso acontece porque, no JavaScript, arrays são considerados um tipo especial de objeto — e o `typeof` não consegue fazer distinções mais específicas entre estruturas complexas.
+
+---
+
+### Limitações de `typeof`
+
+Embora `typeof` funcione bem para tipos primitivos como `string`, `number` e `boolean`, ele se torna limitado quando lidamos com estruturas como objetos, arrays ou instâncias criadas com funções construtoras. Isso pode gerar confusão ao tentar identificar com precisão o que cada variável representa.
+
+Exemplo de confusão:
+
+```javascript
+const carroMaria = new Carro("Onix", "Chevrolet", 2021, 2020);
+console.log(typeof carroMaria); // "object"
+```
+
+Aqui, `carroMaria` foi criado com uma função construtora, mas o `typeof` ainda retorna `"object"`, sem revelar que se trata de uma instância de `Carro`.
+
+---
+
+### Verificação de instância com `instanceof`
+
+Para resolver essa limitação, o JavaScript oferece o operador **`instanceof`**, que permite verificar se um objeto é uma instância de uma determinada função construtora (ou classe).
+
+A sintaxe é:
+
+```javascript
+nomeDoObjeto instanceof EstruturaEsperada
+```
+
+Exemplos:
+
+```javascript
+carroMaria instanceof Carro            // true
+conhecimentos instanceof Array         // true
+pessoa instanceof Object               // true
+conhecimentos instanceof Object        // true
+```
+
+> 🧪 `instanceof` retorna um valor booleano (`true` ou `false`), e é útil para identificar estruturas mais específicas de objetos personalizados ou nativos (como `Array`, `Function`, `Date`, etc.).
+
+> ⚠️ Atenção: Apenas escrever `instanceof nomeDoObjeto` não é suficiente. É necessário informar a estrutura que queremos verificar, como `Array`, `Carro`, `Object`, etc.
+
+---
+
+### 🔍 Resumo da Aula 3
+
+Nesta aula, aprendemos a utilizar duas palavras-chave essenciais para inspecionar e compreender melhor nossos dados em JavaScript:
+
+* **`typeof`**: útil para verificar tipos primitivos como `string`, `number`, `boolean`. Mas limitado ao lidar com objetos complexos, pois identifica quase tudo como `"object"`.
+* **`instanceof`**: ideal para verificar instâncias específicas, como saber se um valor é realmente um `Array`, ou se um objeto foi criado a partir de uma função construtora personalizada.
+
+Com isso, ficou mais claro como distinguir entre **tipos primitivos** e **estruturas de dados complexas**, e como o JavaScript enxerga esses elementos internamente. Saber usar `typeof` e `instanceof` de forma consciente é uma etapa importante para escrever códigos mais robustos, confiáveis e legíveis.
