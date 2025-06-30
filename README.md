@@ -3,8 +3,8 @@
 ## Menu 
 [Aula 1 - Conheça a orientação a objetos ](#aula-1--conheça-a-orientação-a-objetos)  
 [Aula 2 - Criando objetos ](#aula-2--cria-objetos)  
-[Aula - ]()  
-[Aula - ]()  
+[Aula 3 - Verifique os tipos e instâncias ](#aula-3--verifique-os-tipos-e-instâncias)  
+[Aula 4 - Acesso a atributos](#aula-4--acesso-a-atributos)  
 [Aula - ]()  
 [Aula - ]()  
 [Aula - ]()  
