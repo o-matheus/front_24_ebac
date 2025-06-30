@@ -294,3 +294,154 @@ Nesta aula, aprendemos a utilizar duas palavras-chave essenciais para inspeciona
 * **`instanceof`**: ideal para verificar instâncias específicas, como saber se um valor é realmente um `Array`, ou se um objeto foi criado a partir de uma função construtora personalizada.
 
 Com isso, ficou mais claro como distinguir entre **tipos primitivos** e **estruturas de dados complexas**, e como o JavaScript enxerga esses elementos internamente. Saber usar `typeof` e `instanceof` de forma consciente é uma etapa importante para escrever códigos mais robustos, confiáveis e legíveis.
+
+## Aula 4 – Acesso a Atributos
+
+### Objetivos da aula
+
+Nesta aula, aprofundamos o conhecimento sobre como interagir com objetos em JavaScript, com foco nos seguintes objetivos:
+
+* Compreender as técnicas de acesso a atributos em objetos JavaScript;
+* Explorar a **mutabilidade** dos atributos, mesmo em objetos declarados com `const`;
+* Utilizar métodos e funções úteis para acessar, validar e manipular atributos dinamicamente.
+
+---
+
+### Formas de acessar atributos
+
+#### 📍 1. Notação ponto (`.`)
+
+A forma mais comum e direta de acessar os atributos de um objeto é usando a **notação ponto**:
+
+```javascript
+console.log(pessoa.nome);     // "Gean"
+console.log(pessoa.idade);    // 30
+```
+
+Essa abordagem é clara e objetiva, mas só funciona para nomes de atributos **estáticos e válidos como identificadores JavaScript** (sem espaços, por exemplo).
+
+---
+
+#### 📍 2. Notação com colchetes (`[]`)
+
+A segunda forma é utilizar **colchetes e strings** com o nome do atributo:
+
+```javascript
+console.log(pessoa["nome"]);  // "Gean"
+```
+
+Essa abordagem permite usar **variáveis dinâmicas** para acessar os atributos. Exemplo:
+
+```javascript
+const chave = "idade";
+console.log(pessoa[chave]);   // 30
+```
+
+> ⚠️ Observação: se esquecer de colocar o nome do atributo entre aspas (ou como string válida), o valor retornado será `undefined`.
+
+---
+
+### Criando funções para acesso dinâmico
+
+Para facilitar o acesso aos atributos, especialmente quando reutilizável, podemos criar funções personalizadas:
+
+```javascript
+function exibirAtributo(nomeAtributo) {
+  console.log(pessoa[nomeAtributo]);
+}
+```
+
+Assim, podemos passar qualquer chave como argumento e obter o valor correspondente:
+
+```javascript
+exibirAtributo("conhecimentos");
+```
+
+---
+
+### Verificando a existência de atributos
+
+Podemos verificar se um atributo **existe** no objeto usando `if`:
+
+```javascript
+if (pessoa.sobrenome) {
+  console.log("A pessoa tem um sobrenome");
+}
+```
+
+No entanto, esse teste só retorna `true` se o valor não for `undefined`, `null` ou uma string vazia.
+
+Para uma verificação mais robusta, mesmo que o valor esteja vazio, usamos:
+
+```javascript
+if ("sobrenome" in pessoa) {
+  console.log("O atributo 'sobrenome' existe");
+}
+```
+
+> 🧠 Isso garante que a chave está definida, independentemente de seu conteúdo.
+
+---
+
+### Mutabilidade de objetos com `const`
+
+Mesmo que um objeto seja declarado com `const`, **seus atributos ainda podem ser alterados**:
+
+```javascript
+pessoa.nome = "João"; // permitido!
+```
+
+A referência ao objeto permanece constante, mas suas propriedades continuam mutáveis.
+
+---
+
+### Tornando objetos imutáveis com `Object.freeze()`
+
+Se quisermos impedir qualquer alteração nos atributos de um objeto, usamos:
+
+```javascript
+Object.freeze(pessoa);
+```
+
+Após o uso do `freeze`, qualquer tentativa de modificar atributos será ignorada silenciosamente (sem erro, mas sem efeito).
+
+---
+
+### Explorando atributos com `Object.keys()` e `Object.values()`
+
+#### 🔑 `Object.keys()`
+
+Retorna um array com os **nomes** dos atributos do objeto:
+
+```javascript
+console.log(Object.keys(pessoa)); // ["nome", "idade", "eMaiorDeIdade", ...]
+```
+
+Podemos usá-lo, por exemplo, para contar o número de atributos:
+
+```javascript
+console.log(Object.keys(pessoa).length);
+```
+
+#### 📦 `Object.values()`
+
+Retorna um array com os **valores** dos atributos do objeto:
+
+```javascript
+console.log(Object.values(pessoa)); // ["Gean", 30, true, ...]
+```
+
+---
+
+### 🔍 Resumo da Aula 4
+
+Nesta aula, aprofundamos o acesso, a verificação e a manipulação de atributos em objetos JavaScript. Aprendemos:
+
+* A acessar atributos com **notação ponto** e **colchetes**;
+* A criar funções para acesso dinâmico de propriedades;
+* A verificar a existência de atributos usando `in`;
+* Que objetos com `const` permitem alteração interna dos atributos;
+* Como **congelar objetos** com `Object.freeze()` para torná-los imutáveis;
+* Como listar e contar atributos com `Object.keys()`, e acessar valores com `Object.values()`.
+
+Essas ferramentas tornam o trabalho com objetos muito mais poderoso, flexível e seguro — essenciais para trabalhar com dados estruturados de forma robusta.
