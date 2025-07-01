@@ -6,7 +6,7 @@
 [Aula 3 - Verifique os tipos e instâncias ](#aula-3--verifique-os-tipos-e-instâncias)  
 [Aula 4 - Acesso a atributos](#aula-4--acesso-a-atributos)  
 [Aula 5 - Aplica a herança  ](#aula-5--aplica-a-herança)  
-[Aula 6 - ]()  
+[Aula 6 - Aplique encapsulamento ](#aula-6--aplique-encapsulamento)  
 [Aula 7 - ]()  
 
 ## Aula 1 – Conheça a orientação a objetos
@@ -591,3 +591,121 @@ Nesta aula, aprendemos na prática como aplicar **herança** com funções const
 
 Esses fundamentos são a base para evoluir para estruturas mais robustas usando `prototype` ou `class` e construir sistemas organizados com **reutilização e hierarquia lógica de dados**.
 
+## Aula 6 – Aplique Encapsulamento
+
+### Objetivos da aula
+
+Nesta aula, o foco foi compreender como proteger os dados dentro dos objetos, garantindo que certas informações só possam ser acessadas ou modificadas de forma controlada. Os objetivos principais foram:
+
+* Compreender o conceito de **encapsulamento** na programação orientada a objetos;
+* Aprender como **implementar encapsulamento em JavaScript**;
+* Explorar os **benefícios** dessa prática, como segurança e previsibilidade no código.
+
+---
+
+### O que é encapsulamento?
+
+O encapsulamento é uma técnica que busca **proteger certos atributos** de um objeto contra alterações externas indesejadas. Isso é especialmente útil em casos como sistemas de e-commerce, onde, por exemplo, o **preço de um produto** não pode ser modificado diretamente pelo usuário.
+
+Em JavaScript, ao utilizar funções construtoras, conseguimos simular essa proteção usando **variáveis internas** que não ficam acessíveis por fora.
+
+---
+
+### Criando atributos privados
+
+Para encapsular um atributo, como `salario`, utilizamos `let` dentro da função construtora, em vez de usar `this.salario`. Dessa forma, o valor **não é exposto via notação ponto** e não pode ser acessado diretamente:
+
+```javascript
+function Funcionario(nome, cargo, salarioInicial) {
+  this.nome = nome;
+  this.cargo = cargo;
+
+  let _salario = salarioInicial;
+}
+```
+
+* A variável `_salario` é privada — ou seja, ela **só existe dentro do escopo da função construtora**.
+* Tentar acessá-la diretamente com `funcionario1._salario` retornará `undefined`.
+
+> ⚠️ Caso alguém use `funcionario1._salario = 9999`, isso **não altera** o valor encapsulado, apenas adiciona uma nova propriedade pública ao objeto com o mesmo nome. A versão privada permanece protegida.
+
+---
+
+### Criando métodos de acesso: Getters e Setters
+
+Para acessar ou alterar o valor encapsulado de forma controlada, criamos dois métodos:
+
+#### 🔍 Getter – `getSalario`
+
+Permite **visualizar** o valor encapsulado:
+
+```javascript
+this.getSalario = function () {
+  return _salario;
+};
+```
+
+Uso:
+
+```javascript
+console.log(funcionario1.getSalario()); // Exibe o salário
+```
+
+#### ✏️ Setter – `setSalario`
+
+Permite **alterar** o valor encapsulado, com validação:
+
+```javascript
+this.setSalario = function (valor) {
+  if (typeof valor === "number") {
+    _salario = valor;
+  }
+};
+```
+
+Uso:
+
+```javascript
+funcionario1.setSalario(6000); // Altera o salário, se for numérico
+```
+
+> 🧠 A validação com `typeof valor === "number"` garante que apenas valores numéricos sejam aceitos — prevenindo atribuições incorretas como strings, objetos ou `null`.
+
+---
+
+### Sobre a nomenclatura: `get` e `set`
+
+O professor também destacou a importância de usar convenções claras para nomear esses métodos:
+
+* `getNomeDoAtributo`: para obter dados;
+* `setNomeDoAtributo`: para atribuir dados.
+
+Esses nomes são chamados de **getters e setters**, e ajudam na legibilidade e na padronização do código — algo essencial em times e projetos maiores.
+
+---
+
+### Deixando o retorno mais elegante com template string
+
+Por fim, o professor mostrou como melhorar a saída do método com **template strings** (entre crases \`` ` \`\`):
+
+```javascript
+this.apresentar = function () {
+  return `${this.nome} trabalha como ${this.cargo}`;
+};
+```
+
+Essa abordagem permite concatenar variáveis e texto de forma clara e expressiva.
+
+---
+
+### 🔍 Resumo da Aula 6
+
+Nesta aula, aprendemos a aplicar **encapsulamento** em JavaScript para proteger atributos sensíveis dos objetos. Exploramos:
+
+* A criação de **variáveis privadas** com `let` dentro da função construtora;
+* A construção de **getters e setters** para acessar e alterar esses dados de forma segura;
+* A **validação de tipo** antes de permitir alterações;
+* A importância de **seguir padrões de nomenclatura** (`get` / `set`);
+* O uso de **template strings** para gerar retornos mais legíveis.
+
+Com essas técnicas, garantimos maior controle sobre os dados internos dos objetos e evitamos alterações indevidas, tornando nossas aplicações mais robustas e seguras.
