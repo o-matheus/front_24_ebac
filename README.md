@@ -5,7 +5,7 @@
 [Aula 2 - Criando objetos ](#aula-2--cria-objetos)  
 [Aula 3 - Verifique os tipos e instâncias ](#aula-3--verifique-os-tipos-e-instâncias)  
 [Aula 4 - Acesso a atributos](#aula-4--acesso-a-atributos)  
-[Aula 5 - ]()  
+[Aula 5 - Aplica a herança  ](#aula-5--aplica-a-herança)  
 [Aula 6 - ]()  
 [Aula 7 - ]()  
 
@@ -590,3 +590,4 @@ Nesta aula, aprendemos na prática como aplicar **herança** com funções const
 * A distinção entre dados que pertencem à **classe base** (Pessoa) e à **subclasse** (Funcionario).
 
 Esses fundamentos são a base para evoluir para estruturas mais robustas usando `prototype` ou `class` e construir sistemas organizados com **reutilização e hierarquia lógica de dados**.
+
