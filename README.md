@@ -5,9 +5,9 @@
 [Aula 2 - Criando objetos ](#aula-2--cria-objetos)  
 [Aula 3 - Verifique os tipos e instâncias ](#aula-3--verifique-os-tipos-e-instâncias)  
 [Aula 4 - Acesso a atributos](#aula-4--acesso-a-atributos)  
-[Aula - ]()  
-[Aula - ]()  
-[Aula - ]()  
+[Aula 5 - ]()  
+[Aula 6 - ]()  
+[Aula 7 - ]()  
 
 ## Aula 1 – Conheça a orientação a objetos
 
@@ -445,3 +445,148 @@ Nesta aula, aprofundamos o acesso, a verificação e a manipulação de atributo
 * Como listar e contar atributos com `Object.keys()`, e acessar valores com `Object.values()`.
 
 Essas ferramentas tornam o trabalho com objetos muito mais poderoso, flexível e seguro — essenciais para trabalhar com dados estruturados de forma robusta.
+
+
+## Aula 5 – Aplica a Herança
+
+### Objetivos da aula
+
+Nesta aula, aprofundamos o conceito de **herança na programação orientada a objetos com JavaScript**. Os objetivos principais foram:
+
+* Compreender o conceito de herança;
+* Praticar a criação de **classes e subclasses** por meio de funções construtoras;
+* Entender a dinâmica de **herança de atributos e métodos** entre estruturas relacionadas.
+
+---
+
+### Criação de funções construtoras
+
+Para começar, criamos duas funções construtoras: `Pessoa` e `Funcionario`. A função `Pessoa` inicialmente recebia apenas o atributo `nome`, e foi estruturada da seguinte forma:
+
+```javascript
+function Pessoa(nome) {
+  this.nome = nome;
+}
+```
+
+Instanciamos o objeto:
+
+```javascript
+const pessoa1 = new Pessoa("Maria");
+console.log(pessoa1); // { nome: "Maria" }
+```
+
+Em seguida, criamos a função construtora `Funcionario`, que inclui os atributos `cargo` e `salario`:
+
+```javascript
+function Funcionario(nome, cargo, salario) {
+  this.nome = nome;
+  this.cargo = cargo;
+  this.salario = salario;
+}
+```
+
+E instanciamos:
+
+```javascript
+const funcionario1 = new Funcionario("Maria", "Desenvolvedora", 5000);
+```
+
+---
+
+### Adicionando métodos à função construtora
+
+O professor então enriqueceu a estrutura adicionando métodos. Dentro de `Pessoa`, foi incluído o método `dizOi`:
+
+```javascript
+this.dizOi = function () {
+  console.log(this.nome + " diz olá!");
+};
+```
+
+Esse método pode ser executado com:
+
+```javascript
+pessoa1.dizOi(); // "Maria diz olá!"
+```
+
+> 💡 Foi observado que, ao definir a função diretamente como valor do atributo, ela aparece como **função anônima** ao inspecionar o objeto. Para nomeá-la corretamente, usamos `function dizOi() { ... }`.
+
+---
+
+### Aplicando herança com `.call()`
+
+Para **evitar repetição** de atributos ou métodos entre `Pessoa` e `Funcionario`, o professor aplicou o método `.call()` dentro da função `Funcionario`:
+
+```javascript
+function Funcionario(nome, cargo, salario) {
+  Pessoa.call(this, nome);
+  this.cargo = cargo;
+  this.salario = salario;
+}
+```
+
+Essa linha executa a função `Pessoa` dentro do contexto de `Funcionario`, fazendo com que o atributo `nome` (e eventuais métodos como `dizOi`) sejam herdados automaticamente.
+
+> ✅ Com isso, `funcionario1` agora possui também o atributo `nome`, herdado de `Pessoa`.
+
+---
+
+### Entendendo o fluxo da herança
+
+A aula enfatizou que a herança não é apenas uma forma de **evitar repetição de código**, mas sim um mecanismo para estabelecer **comunicação e compartilhamento de dados** entre estruturas que representam diferentes níveis de abstração.
+
+Ao aplicar `Pessoa.call(this, nome)`, os dados são corretamente propagados:
+
+* `this.nome` recebe `"Maria"` via herança;
+* `this.cargo` e `this.salario` são exclusivos de `Funcionario`.
+
+Logo:
+
+```javascript
+funcionario1.dizOi(); // "Maria diz olá!" (herdado de Pessoa)
+```
+
+---
+
+### A importância de organizar atributos e métodos no lugar certo
+
+O professor também demonstrou o caso inverso: tentar acessar um método ou atributo que **não pertence à estrutura original**.
+
+Por exemplo, ao criar uma nova `Pessoa` e tentar acessar `pessoa1.descargo()`, onde `descargo` é um método que depende do atributo `cargo`, o resultado foi:
+
+```javascript
+undefined
+```
+
+Isso ocorreu porque `cargo` só existe em `Funcionario`, não em `Pessoa`. E o método `descargo`, por depender desse atributo, deve estar definido **na estrutura correta**:
+
+```javascript
+this.descargo = function () {
+  console.log(this.cargo);
+};
+```
+
+Quando usado corretamente:
+
+```javascript
+funcionario1.descargo(); // "Desenvolvedora"
+```
+
+Mas se for chamado por `pessoa1`, que não tem o atributo `cargo`, o resultado será indefinido.
+
+> 🧠 A lição aqui é clara: **herança dá acesso**, mas **boas práticas indicam que cada método deve ser criado no lugar mais coerente com os dados que ele manipula**.
+
+---
+
+### 🔍 Resumo da Aula 5
+
+Nesta aula, aprendemos na prática como aplicar **herança** com funções construtoras em JavaScript. Os pontos principais foram:
+
+* A criação de funções construtoras (`Pessoa`, `Funcionario`);
+* O uso de `this` para definir atributos e métodos;
+* A utilização de `Pessoa.call(this, nome)` para herdar atributos de outra função;
+* A importância de **colocar métodos no lugar certo**, respeitando a estrutura e a responsabilidade de cada objeto;
+* A distinção entre dados que pertencem à **classe base** (Pessoa) e à **subclasse** (Funcionario).
+
+Esses fundamentos são a base para evoluir para estruturas mais robustas usando `prototype` ou `class` e construir sistemas organizados com **reutilização e hierarquia lógica de dados**.
