@@ -1,24 +1,30 @@
-// A classe criada o partir da abstração vai ser o automovel. O mesmo vai possuir motor, combustível, potencia.
-function Carro(motor, combustivel ,potencia) {
+// A classe criada o partir da abstração vai ser o automovel. O mesmo vai possuir marca, modelo, motor, combustivel, consume.
+function Carro(marca, modelo, motor, combustivel, consumo) {
+    this.marca = marca;
+    this.modelo = modelo;
     this.motor = motor;
     this.combustivel = combustivel;
-    this.potencial = potencia;
-    this.acelerar = function() {
+    this.consumo = consumo;
+    this.acelerar = function acelerar() {
         console.log("Vrum Vrum")
     }
 }
-function Moto(motor, combustivel ,potencia) {
-    this.motor = motor;
-    this.combustivel = combustivel;
-    this.potencial = potencia;
-    this.lancheRapido = function() {
-        console.log("Furando sinal...Cortando faixa...")
-    }
+function CarroPopular(marca, modelo) {
+    Carro.call(this, marca, modelo, 1.0, "flex", 10)
+
 }
 
-const fordKa = new Carro(1.0, "flex", 85);
-const chevroletOpala = new Carro(4.1, "gasolina", 141)
-const hondaBiz = new Moto(0.125, "flex", 9)
+function CarroLuxo(marca, modelo) {
+    Carro.call(this, marca, modelo, 4.0, "gasolina", 5)
+}
+
+const fordKa = new CarroPopular("Ford", "Ka")
+const fiatUno = new CarroPopular("Fiat", "Uno")
+const mercedesAmg = new CarroLuxo("Mercedes", "C63 - AMG")
+
+console.log(fordKa);
+console.log(fiatUno);
+console.log(mercedesAmg);
 
 
 
