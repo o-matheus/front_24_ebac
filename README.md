@@ -709,3 +709,104 @@ Nesta aula, aprendemos a aplicar **encapsulamento** em JavaScript para proteger 
 * O uso de **template strings** para gerar retornos mais legíveis.
 
 Com essas técnicas, garantimos maior controle sobre os dados internos dos objetos e evitamos alterações indevidas, tornando nossas aplicações mais robustas e seguras.
+
+## Aula 7 – Aplique o Polimorfismo
+
+### 🎯 Objetivos da aula
+
+* Compreender o conceito de **polimorfismo** na programação orientada a objetos;
+* Aprender como **aplicar o polimorfismo** em JavaScript;
+* Explorar os **benefícios do polimorfismo** na organização do código.
+
+---
+
+### 🧠 O que é Polimorfismo?
+
+A palavra *polimorfismo* significa literalmente "muitas formas". Na programação orientada a objetos, esse conceito permite que **diferentes objetos usem o mesmo método**, mas com **comportamentos distintos**, adaptados ao contexto de cada um.
+
+O professor apresentou um exemplo prático utilizando o método `aumento`. Esse método seria responsável por aplicar reajustes salariais em diferentes tipos de funcionários dentro de uma empresa fictícia.
+
+---
+
+### 🏗️ Criando o método `aumento`
+
+A implementação inicial foi feita dentro da função construtora `Funcionario`. O método `aumento` era responsável por aplicar um reajuste de **10%** no salário do funcionário, utilizando o valor armazenado como variável privada (`_salario`):
+
+```javascript
+this.aumento = function () {
+  const novoSalario = _salario * 1.1;
+  console.log("Novo salário:", novoSalario);
+  _salario = novoSalario;
+};
+```
+
+Esse método foi testado com uma instância chamada `funcionario1`, com cargo de desenvolvedor e salário inicial definido. A atualização foi confirmada com o método `getSalario()`.
+
+---
+
+### 👥 Aplicando o polimorfismo: outro funcionário com regras diferentes
+
+Em seguida, foi criado um segundo funcionário chamado **Pedro**, com cargo de **estagiário** e salário de R\$2000. A ideia era que **o estagiário tivesse um aumento diferente (7%)**, o que trouxe a necessidade do polimorfismo.
+
+Sem polimorfismo, isso poderia ser feito com condicionais:
+
+```javascript
+if (this.cargo === "Estagiário") {
+  _salario *= 1.07;
+} else {
+  _salario *= 1.1;
+}
+```
+
+Contudo, essa abordagem **acopla lógica e dados**, tornando o código mais difícil de manter.
+
+---
+
+### ✅ Refatoração com polimorfismo
+
+Para aplicar o polimorfismo corretamente, foi criada uma nova **função construtora chamada `Estagiario`**, que **herda** da função `Funcionario` utilizando `Funcionario.call(this, ...)`. A diferença é que a função `Estagiario` **redefine** o método `aumento`:
+
+```javascript
+function Estagiario(nome) {
+  Funcionario.call(this, nome, "Estagiário", 2000);
+
+  this.aumento = function () {
+    const novoSalario = this.getSalario() * 1.07;
+    this.setSalario(novoSalario);
+  };
+}
+```
+
+Dessa forma, o mesmo método (`aumento`) possui **comportamentos distintos** dependendo da instância: o funcionário comum recebe 10% e o estagiário recebe 7%.
+
+---
+
+### 🛠️ Ajustes finais e boas práticas
+
+Durante os testes com o `Estagiario`, surgiu um erro ao tentar usar o método `getSalario()` porque a função `Funcionario` formatava a saída com interpolação de `this.nome` e `this.cargo`, que não estavam acessíveis da forma esperada.
+
+A solução foi **simplificar o método `getSalario`**:
+
+```javascript
+this.getSalario = function () {
+  return _salario;
+};
+```
+
+Além disso, o professor reforçou a importância de **deixar cada método no local certo**, ou seja, métodos como `aumento` devem estar nas funções onde fazem mais sentido conceitualmente. Isso evita chamadas indevidas ou tentativas de acessar atributos que não existem na instância.
+
+---
+
+### 🧪 Resumo prático
+
+Para fixar os conceitos, o professor revisou os principais pilares da programação orientada a objetos:
+
+* **Herança**: compartilhamento de atributos e métodos entre funções construtoras;
+* **Encapsulamento**: proteção de dados por meio de variáveis privadas e controle via `get` e `set`;
+* **Polimorfismo**: métodos com mesmo nome, mas **comportamentos diferentes** dependendo do tipo do objeto.
+
+---
+
+### ✅ **Resumo da Aula 7**
+
+Nesta aula, aprendemos a **aplicar o polimorfismo** em JavaScript por meio de métodos personalizados para diferentes tipos de objetos. Criamos funções construtoras para `Funcionario` e `Estagiario`, implementando a lógica de herança e sobrescrita de métodos. Vimos como tornar o código mais organizado e fácil de manter ao **evitar condicionais e delegar responsabilidades para os próprios objetos**. Finalizamos com boas práticas de encapsulamento e estruturação clara do código orientado a objetos.
